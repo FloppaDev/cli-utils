@@ -2,12 +2,16 @@
 
 $cb = file('php://stdin');
 
-$options = getopt('e:aFf');
+$options = getopt('e:adf');
 
 $with_ext = @$options['e'];
 $pick_all = isset($options['a']);
-$ext_path = isset($options['f']);
-$slash_ext_path = isset($options['F']);
+$files = isset($options['f']);
+$dirs = isset($options['d']);
+
+if ($files) {
+    $dirs = false;
+}
 
 foreach ($cb as $line) {
     $line = preg_replace('/[^a-zA-Z\d\/\._-]+/', ' ', $line);
@@ -19,11 +23,9 @@ foreach ($cb as $line) {
         }
 
         if (file_exists($word)) {
-            if ($ext_path && strpos('.', $word) === false) {
-                continue;
-            }
+            $f = is_file($word);
 
-            if ($slash_ext_path && strpos('/', $word) === false) {
+            if ((!$f && $files) || ($f && $dirs)) {
                 continue;
             }
 
