@@ -20,6 +20,11 @@ paste() {
     xclip -o -selection clipboard
 }
 
+# Is stdin open?
+stdin() {
+    test ! -t 0
+}
+
 # pick
 # Outputs the first file path in the clipboard.
 #
@@ -28,9 +33,10 @@ paste() {
 # -f   
 # -F   
 pick() {
-    paste | php $(dirname $0)/lib/pick.php $@ 
+    stdin && cat || paste | php $(dirname $0)/lib/pick.php $@ 
 }
 
 edit() {
     $EDITOR $(pick)
 }
+
