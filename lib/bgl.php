@@ -31,15 +31,15 @@ foreach ($jobs as $job) {
 
     $prev ??= ' ';
 
-    $path = [];
+    if (preg_match('/^vim\s+\S+/', $args)) {
+        $s = preg_split('/\s+/', $args, -1, PREG_SPLIT_NO_EMPTY);
 
-    if (preg_match('/^vim\s+(.*)/', $args, $path) && preg_match('/[\/\.]/', $args)) {
-        if (!empty(@$path[1])) {
-            $args = $path[1];
+        if (!empty($s)) {
+            $args = @array_reverse($s)[0];
+        }
 
-            if ($list_files) {
-                echo "$args\n";
-            }
+        if ($list_files) {
+            echo "$args\n";
         }
     }
 
@@ -48,5 +48,12 @@ foreach ($jobs as $job) {
     }
 
     $indent = !$i++ ? ' >' : '  '; 
+
+    $id = (int)$id;
+
+    if ($id > 9) {
+        $id = chr($id + 55);
+    }
+
     echo "$indent [$id]$prev $args\n";
 }

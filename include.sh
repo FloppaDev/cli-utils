@@ -42,16 +42,8 @@ pick() {
     [ ! -t 0 ] && cat || paste | php $CLI_UTILS/lib/pick.php $@ 
 }
 
-edit() {
-    $EDITOR $(pick)
-}
-
 vi() {
     eval "$(php $CLI_UTILS/lib/vi.php $@)"
-}
-
-ps1() {
-    echo TODO
 }
 
 # serve
