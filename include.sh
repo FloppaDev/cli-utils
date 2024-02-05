@@ -25,6 +25,15 @@ to() {
     [ -z "$@" ] && at || cd $(at $@)
 }
 
+# copy
+# -|$1 Copy to clipboard stdin or $1
+# 
+# echo ':)' | copy
+# copy file.txt
+copy() {
+    [ ! -t 0 ] && (cat | xclip -sel clip) || xclip -sel clip $@
+}
+
 # paste
 # Output the contents of the clipboard
 paste() {
