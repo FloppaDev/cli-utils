@@ -63,3 +63,7 @@ serve() {
     [ -z "$1" ] && port='8080' || port="$1"
     php -S 127.0.0.1:$port $@
 }
+
+ps1() {
+    export PS1="$(php $CLI_UTILS/lib/ps1.php)"
+}
