@@ -31,11 +31,32 @@ foreach ($jobs as $job) {
 
     $prev ??= ' ';
 
-    if (preg_match('/^vim\s+\S+/', $args)) {
-        $s = preg_split('/\s+/', $args, -1, PREG_SPLIT_NO_EMPTY);
+    if (preg_match('/^vim\s+\S+/', $args) ) {
+        $wd = [];
 
-        if (!empty($s)) {
-            $args = @array_reverse($s)[0];
+        if (preg_match('/(\S+)\s+\(wd:\s+(\S*?)\)$/', $args, $wd)) {
+            $path = @$wd[1];
+            $_wd = @$wd[2];
+            $wd = str_replace('~', getenv('HOME'), $_wd);
+            $cwd = getcwd();
+
+            if (substr($wd, 0, strlen($cwd)) == $cwd) {
+                $args = substr($wd, strlen($cwd) + 1)."/$path";
+            }
+            else if (substr($cwd, 0, strlen($wd)) == $wd) {
+                $sub_dirs = substr_count($cwd, '/', 0) - substr_count($wd, '/', 0);
+                $args = str_repeat('../', $sub_dirs).$path;
+            }
+            else {
+                $args = "$_wd/$path";
+            }
+        }
+        else {
+            $s = preg_split('/\s+/', $args, -1, PREG_SPLIT_NO_EMPTY);
+
+            if (!empty($s)) {
+                $args = @array_reverse($s)[0];
+            }
         }
 
         if ($list_files) {
