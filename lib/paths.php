@@ -9,7 +9,6 @@ if (!$search) {
     goto out;
 }
 
-
 foreach ($paths as $path) {
     [$name, $path] = explode(':', $path);
 
