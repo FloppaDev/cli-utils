@@ -18,7 +18,7 @@ function format_match($file, $line, $column, $match) {
     $r = "\033[0;31m";
     $w = "\033[1;37m";
 
-    $match = preg_replace('/[\x01-\x1F\x7F]/', '', trim($match));
+    $match = substr(preg_replace('/[\x01-\x1F\x7F]/', '', trim($match)), 0, 500);
 
     $space = str_repeat(' ', 3 - strlen("$file:$line:$column") % 2);
 
