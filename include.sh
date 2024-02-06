@@ -70,9 +70,7 @@ ps1() {
 }
 
 lf() {
-    tabs 2
     tput rmam
     ugrep --json --line-number --column-number $@ | php $CLI_UTILS/lib/lf.php
     tput smam
-    [ -z "$TABS" ] && tabs 8 || tabs $TABS
 }

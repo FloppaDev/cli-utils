@@ -13,6 +13,14 @@ foreach ($matches as $match) {
 }
 
 function format_match($file, $line, $column, $match) {
-    $match = trim($match);
-    echo "$file:$line:$column \t$match"."\n";
+    $d = "\033[0;37m";
+    $b = "\033[0;96m";
+    $r = "\033[0;31m";
+    $w = "\033[1;37m";
+
+    $match = preg_replace('/[\x01-\x1F\x7F]/', '', trim($match));
+
+    $space = str_repeat(' ', 3 - strlen("$file:$line:$column") % 2);
+
+    echo "$b$file$w:$r$line$w:$r$column$d$space$match"."\n";
 }
