@@ -51,6 +51,7 @@ pick() {
     [ ! -t 0 ] && cat || paste | php $CLI_UTILS/lib/pick.php $@ 
 }
 
+#TODO take stdin when piped into
 vi() {
     eval "$(php $CLI_UTILS/lib/vi.php $@)"
 }
@@ -66,4 +67,12 @@ serve() {
 
 ps1() {
     export PS1="$(php $CLI_UTILS/lib/ps1.php)"
+}
+
+lf() {
+    tabs 2
+    tput rmam
+    ugrep --json --line-number --column-number $@ | php $CLI_UTILS/lib/lf.php
+    tput smam
+    [ -z "$TABS" ] && tabs 8 || tabs $TABS
 }
