@@ -51,9 +51,8 @@ pick() {
     [ ! -t 0 ] && cat || paste | php $CLI_UTILS/lib/pick.php $@ 
 }
 
-#TODO take stdin when piped into
 vi() {
-    eval "$(php $CLI_UTILS/lib/vi.php $@)"
+    [ ! -t 0 ] && (cat | vim -) || eval "$(php $CLI_UTILS/lib/vi.php $@)"
 }
 
 # serve
