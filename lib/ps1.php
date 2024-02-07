@@ -23,15 +23,27 @@ $user = [];
 exec('id -u', $user);
 $user = @$user[0];
 
-$d = '\033[0;37m';
-$b = '\033[30;106m';
-$p = '\033[30;105m';
-$w = '\033[30;47m';
+$d = "\001$(tput sgr0)\002";
+$b = "\001$(tput setaf 0 setab 6)\002";
+$p = "\001$(tput setaf 0 setab 5)\002";
+$w = "\001$(tput setaf 0 setab 7)\002";
 
-$t = $user == 0 ? '\033[1;95m' : '\033[1;94m';
+$t = $user == 0 
+    ? "\001$(tput bold setaf 5)\002" 
+    : "\001$(tput bold setaf 4)\002";
 
 $i1 = substr($i, 0, 1);
 $i2 = substr($i, 1, 1);
 
-echo "${b}${tty}${p}${g}${w}${i1}${p}${i2}${b}${depth}${d} ${t}${dir}${d} ";
+echo 
+    $b . $tty.
+    $p . $g.
+    $w . $i1.
+    $p . $i2.
+    $b . $depth.
+    $d .
+    ' '.
+    $t . $dir.
+    $d .
+    ' ';
 
