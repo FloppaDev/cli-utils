@@ -52,7 +52,13 @@ pick() {
 }
 
 vi() {
-    [ ! -t 0 ] && (cat | vim -) || eval "$(php $CLI_UTILS/lib/vi.php $@)"
+    if [ ! -t 0 ]; then
+        cat | vim -
+    elif [ -z "$@" ]; then
+        vim 
+    else
+        eval "$(php $CLI_UTILS/lib/vi.php $@)"
+    fi
 }
 
 # serve
