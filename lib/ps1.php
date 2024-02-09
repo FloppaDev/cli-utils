@@ -10,10 +10,9 @@ $i = $now->format('i');
 $cwd = getcwd();
 $dir_components = array_reverse(explode('/', $cwd));
 $dir = @$dir_components[0];
-$depth = dechex(count($dir_components) - 2);
+$depth = dechex(count($dir_components) - 1);
 $depth = $depth > 0 ? $depth : 0;
 
-#TODO fn in common to always read only 1st line of stdout
 $tty = [];
 exec('tty', $tty);
 $tty = @$tty[0];
